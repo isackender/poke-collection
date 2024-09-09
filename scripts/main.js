@@ -466,7 +466,7 @@ $(document).on('click', '.pokemon', function() {
         $('#modal-image').attr('src', modalImage);
         $('#modal-info').html(modalInfo);
 
-        $('#modal-bg').off('load error');
+        $('#modal-bg').off('load');
 
         $('#modal-bg').on('load', () => {
             $('#modal').fadeIn().css("display","flex"); // Show modal
