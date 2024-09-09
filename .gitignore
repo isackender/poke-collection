@@ -6,6 +6,7 @@
 /images/card-bg-5px.png
 /images/favicon.png
 
-/bs-config.json
-/package-lock.json
-/package.json
+bs-config.json
+package-lock.json
+package.json
+Readme.md
