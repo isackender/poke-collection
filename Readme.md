@@ -4,6 +4,10 @@ A small tool to visualize the Pokémon collection of a given file.
 
 ![Demo image](https://i.imgur.com/HzTNOGC.png)
 
+## Live version
+
+A live version is currently hosted on this repository's <a href="https://isackender.github.io/poke-collection/" target="_blank">GitHub pages</a>. Since all requests are handled on the client side, the server load is minimal.
+
 ## Usage
 
 Upload a `.txt` file with the format:
@@ -28,7 +32,3 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 ## Species
 
 **Currently Work In Progress** - There are also some filters to select the species of the whole collection. 
-
-## Live version
-
-A live version is currently hosted on this repository's <a href="https://isackender.github.io/poke-collection/" target="_blank">GitHub pages</a>. Since all requests are handled on the client side, the server load is minimal.
