@@ -8,20 +8,60 @@ let isFiltering = false;
 
 let typesDataArray = [];
 let pokemonDataArray = [];
-const pokemonFile = "./data-source/pokemons-test.txt";
 
 $(document).ready(async function() {
-    // Show the loader
-    $('#loader').show();
-
-    await iniPokemonCollection();
-});
-
-async function iniPokemonCollection() {
     loadSpeciesFilters();
     await loadTypeFilters();
     await loadTypesData();
-    await loadFile();
+
+    // Hide the loader
+    $('#loader').hide();
+
+    $('#file-input').on('change', function(event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const validExtensions = ['txt']; // List of allowed file extensions
+            
+            if (!validExtensions.includes(fileExtension)) {
+                alert('Invalid file format. Please upload a .txt file.');
+                return;
+            }
+
+            if (file.type !== 'text/plain') {
+                alert('Invalid file type. Please upload a text file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const fileContent = e.target.result;
+                // Resets initial variables
+                currentPage = 0;
+
+                allPokemonsLoaded = false;
+                isLoading = false;
+                isSearching = false;
+                isFiltering = false;
+
+                typesDataArray = [];
+                pokemonDataArray = [];
+
+                $('#pokemon-container').empty();
+                iniPokemonCollection(fileContent);
+                // Show the loader
+                $('#loader').show();
+            };
+            
+            reader.readAsText(file);
+        }
+    });
+});
+
+async function iniPokemonCollection(collectionFileContent) {
+    await loadFile(collectionFileContent);
     await sortPokemonArray();
     await loadNextSetOfPokemon();
 }
@@ -73,7 +113,7 @@ async function loadTypesData() {
         });
     });
 
-    console.log(typesDataArray);
+    // console.log(typesDataArray);
 
     return Promise.all(promises);
 }
@@ -93,54 +133,52 @@ function loadSpeciesFilters() {
 }
 
 // Fetch pokemon data from the text file
-async function loadFile() {
+async function loadFile(fileContent) {
     return new Promise((resolve, reject) => {
-        $.get(pokemonFile, function(data) {
-            const pokemonArray = data.split('#');
-            pokemonArray.shift(); // Remove the first empty element
+        const pokemonArray = fileContent.split('#');
+        pokemonArray.shift(); // Remove the first empty element
 
-            pokemonArray.forEach(pokemon => {
-                const parts = pokemon.trim().split(' ');
-                let number = parts[0];
-                let name = capitalizeFirstLetter(parts.slice(1).join(' '));
-                let apiName = parts.slice(1).join('-').replace("'","").toLowerCase();
-                let imgSrc = "#";
-                let artworkSrc = "#";
-                let isShiny = false;
-                let isLegendary = false;
-                let isMythical = false;
-                let isError = false;
-                let types = [];
+        pokemonArray.forEach(pokemon => {
+            const parts = pokemon.trim().split(' ');
+            let number = parts[0];
+            let name = capitalizeFirstLetter(parts.slice(1).join(' '));
+            let apiName = parts.slice(1).join('-').replace("'","").toLowerCase();
+            let imgSrc = "#";
+            let artworkSrc = "#";
+            let isShiny = false;
+            let isLegendary = false;
+            let isMythical = false;
+            let isError = false;
+            let types = [];
 
-                // Check if the pokemon is shiny
-                if (name.endsWith('(s)')) {
-                    isShiny = true;
-                    name = name.replace('(s)', '').trim();
-                    apiName = apiName.replace('(s)', '').trim();
-                }
+            // Check if the pokemon is shiny
+            if (name.endsWith('(s)')) {
+                isShiny = true;
+                name = name.replace('(s)', '').trim();
+                apiName = apiName.replace('(s)', '').trim();
+            }
 
-                if (name.toLowerCase().includes('nidoran')) { // Nidoran gender
-                    name = name.replace('f', '♀').trim();
-                    apiName = apiName.replace('f', '-f').trim();
-                    name = name.replace('m', '♂').trim();
-                    apiName = apiName.replace('m', '-m').trim();
-                }
+            if (name.toLowerCase().includes('nidoran')) { // Nidoran gender
+                name = name.replace('f', '♀').trim();
+                apiName = apiName.replace('f', '-f').trim();
+                name = name.replace('m', '♂').trim();
+                apiName = apiName.replace('m', '-m').trim();
+            }
 
-                pokemonDataArray.push({
-                    number: number,
-                    name: name,
-                    apiName: apiName,
-                    imgSrc: imgSrc,
-                    artworkSrc: artworkSrc,
-                    isShiny: isShiny,
-                    isLegendary: isLegendary,
-                    isMythical: isMythical,
-                    isError: isError,
-                    types: types
-                });
+            pokemonDataArray.push({
+                number: number,
+                name: name,
+                apiName: apiName,
+                imgSrc: imgSrc,
+                artworkSrc: artworkSrc,
+                isShiny: isShiny,
+                isLegendary: isLegendary,
+                isMythical: isMythical,
+                isError: isError,
+                types: types
             });
-            resolve();
-        }).fail(reject);
+        });
+        resolve();
     });
 }
 
@@ -163,7 +201,7 @@ async function loadNextSetOfPokemon() {
         allPokemonsLoaded = true;
     }    
     
-    console.log(pokemonSubset);
+    // console.log(pokemonSubset);
 
     await loadPokemonBaseData(pokemonSubset);  // Fetch base data
     await loadPokemonData(pokemonSubset);  // Fetch aditional data
