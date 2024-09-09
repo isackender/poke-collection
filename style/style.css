@@ -22,6 +22,11 @@ h1 {
     font-family: 'Bitter', serif;
 }
 
+h1 img {
+    max-height: 1.2em;
+    vertical-align: bottom;
+}
+
 /* Search bar styles */
 #search-bar {
     display: flex;
