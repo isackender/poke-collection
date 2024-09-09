@@ -142,7 +142,7 @@ async function loadFile(fileContent) {
             const parts = pokemon.trim().split(' ');
             let number = parts[0];
             let name = capitalizeFirstLetter(parts.slice(1).join(' ').toLowerCase());
-            let apiName = parts.slice(1).join('-').replace("'","").toLowerCase();
+            let apiName = parts.slice(1).join('-').replace("'","").replace(".","").toLowerCase();
             let imgSrc = "#";
             let artworkSrc = "#";
             let isShiny = false;
