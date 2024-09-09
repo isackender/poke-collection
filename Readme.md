@@ -29,4 +29,8 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 
 ## Species
 
-**Currently Work In Progress** - There are also some filters to select the species of the whole collection (shiny, legendary, or mythical). 
+**Currently Work In Progress** - There are also some filters to select the species of the whole collection (shiny, legendary, or mythical).
+
+## Exceptions
+
+Since some Pokémon have gender (like Nidoran), you can specify it with `m` or `f` after their name (for male or female respectively). Ex: `Nidoranf` or `Nidoranm(s)`
