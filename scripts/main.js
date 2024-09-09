@@ -8,7 +8,7 @@ let isFiltering = false;
 
 let typesDataArray = [];
 let pokemonDataArray = [];
-const pokemonFile = "../data-source/pokemons-test.txt";
+const pokemonFile = "./data-source/pokemons-test.txt";
 
 $(document).ready(async function() {
     // Show the loader
