@@ -210,8 +210,8 @@ h2#modal-name {
     width: 120px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     background: linear-gradient(135deg, #7792bb, #362f5a);
-    background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a);
+    background-image: url('./images/card-bg.png');
+    background-image: url('./images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a);
     background-size: cover;
     text-align: center;
     display: flex;
@@ -241,24 +241,24 @@ h2#modal-name {
 }
 .pokemon.shiny {
     background: linear-gradient(135deg, #3669b6, #21165a);
-    background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a);
+    background-image: url('./images/card-bg.png');
+    background-image: url('./images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a);
 }
 .pokemon.legendary {
     background: linear-gradient(135deg, #d0b854, #e85d00);
-    background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00);;
+    background-image: url('./images/card-bg.png');
+    background-image: url('./images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00);;
 }
 .pokemon.mythical {
     /*
     background: linear-gradient(135deg, rgba(255,0,0,0.5) 0%, rgba(138,145,0,0.5) 20%, rgba(0,255,0,0.5) 40%, rgba(0,255,246,0.5) 60%, rgba(0,0,255,0.5) 80%, rgba(255,0,0,0.5) 100%);
-    background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, rgba(255,0,0,0.5) 0%, rgba(138,145,0,0.5) 20%, rgba(0,255,0,0.5) 40%, rgba(0,255,246,0.5) 60%, rgba(0,0,255,0.5) 80%, rgba(255,0,0,0.5) 100%);
+    background-image: url('./images/card-bg.png');
+    background-image: url('./images/card-bg.png'), linear-gradient(135deg, rgba(255,0,0,0.5) 0%, rgba(138,145,0,0.5) 20%, rgba(0,255,0,0.5) 40%, rgba(0,255,246,0.5) 60%, rgba(0,0,255,0.5) 80%, rgba(255,0,0,0.5) 100%);
     */
 
     background: linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%);
-    background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%);
+    background-image: url('./images/card-bg.png');
+    background-image: url('./images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%);
 }
 .pokemon.error {
     opacity: 0.3;
@@ -305,7 +305,7 @@ h2#modal-name {
     left: 0;
     top: 0;
 
-    mask: url(../images/card-bg-alpha.png);
+    mask: url(./images/card-bg-alpha.png);
     mask-mode: luminance;
     mask-composite: add;
 }
