@@ -13,6 +13,8 @@ Upload a `.txt` file with the format:
 
 The expected file format consists of one line with lowercase text. If a Pokémon is shiny, append `(s)` to its name.
 
+You can use <a href="https://convertcase.net/" target="_blank">convertcase.net</a> or any tool you like to convert to lowercase the text of your file.
+
 ## Filters 
 
 ![Filter images](https://i.imgur.com/p72G5lI.png)
