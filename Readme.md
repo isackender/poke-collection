@@ -29,4 +29,4 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 
 ## Species
 
-**Currently Work In Progress** - There are also some filters to select the species of the whole collection. 
+**Currently Work In Progress** - There are also some filters to select the species of the whole collection (shiny, legendary, or mythical). 
