@@ -12,12 +12,10 @@ A live version is currently hosted on this repository's <a href="https://isacken
 
 Upload a `.txt` file with the format:
 ```
-#bulbasaur #002 ivysaur #005 charmeleon(s) #007 squirtle
+#001 bulbasaur #002 ivysaur #005 charmeleon(s) #007 squirtle
 ```
 
-The expected file format consists of one line with lowercase text. If a Pokémon is shiny, append `(s)` to its name.
-
-You can use <a href="https://convertcase.net/" target="_blank">convertcase.net</a> or any tool you like to convert to lowercase the text of your file.
+The expected file format consists of one line with the Pokédex number of each Pokémon and its name. If a Pokémon is shiny, append `(s)` to its name.
 
 ## Filters 
 
