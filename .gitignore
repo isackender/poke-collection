@@ -1,0 +1,11 @@
+/node_modules
+
+/data-source/pokemons.txt
+
+/images/card-bg-orig.png
+/images/card-bg-5px.png
+/images/favicon.png
+
+/bs-config.json
+/package-lock.json
+/package.json
