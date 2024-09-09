@@ -8,7 +8,7 @@ let isFiltering = false;
 
 let typesDataArray = [];
 let pokemonDataArray = [];
-const pokemonFile = "/data-source/pokemons-test.txt";
+const pokemonFile = "./data-source/pokemons-test.txt";
 
 $(document).ready(async function() {
     // Show the loader
@@ -485,7 +485,7 @@ function cardifyItems() {
         const imgSrc = $(card).find('img').attr('src');
 
         card.find('.glow-border').css('mask', `
-            url(/images/card-bg-alpha.png),
+            url(./images/card-bg-alpha.png),
             url(${imgSrc})
         `);
 
@@ -548,26 +548,26 @@ function cardifyItems() {
 
             card.css('transform', '');
             card.css('background', 'linear-gradient(135deg, #7792bb, #362f5a)');
-            card.css('background-image', "url('/images/card-bg.png')");
-            card.css('background-image', "url('/images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a)");
+            card.css('background-image', "url('./images/card-bg.png')");
+            card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a)");
             card.css('background-size', 'cover');
             
             if ($(card).hasClass("shiny")) {
                 card.css('background', 'linear-gradient(135deg, #3669b6, #21165a)');
-                card.css('background-image', "url('/images/card-bg.png')");
-                card.css('background-image', "url('/images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a)");
+                card.css('background-image', "url('./images/card-bg.png')");
+                card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a)");
             }
             
             if ($(card).hasClass("legendary")) {
                 card.css('background', 'linear-gradient(135deg, #d0b854, #e85d00)');
-                card.css('background-image', "url('/images/card-bg.png')");
-                card.css('background-image', "url('/images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00)");
+                card.css('background-image', "url('./images/card-bg.png')");
+                card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00)");
             }
 
             if ($(card).hasClass("mythical")) {
                 card.css('background', 'linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%)');
-                card.css('background-image', "url('/images/card-bg.png')");
-                card.css('background-image', "url('/images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%)");
+                card.css('background-image', "url('./images/card-bg.png')");
+                card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%)");
             }
             
             card.find('.glow').fadeOut(150);
