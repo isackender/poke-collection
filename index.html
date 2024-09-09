@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Collection</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Raleway:wght@400&display=swap">
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+    <div id="modal">
+        <div id="modal-content">
+            <span id="modal-close">&times;</span>
+            <img id="modal-bg" src="#" alt="">
+            <div id="modal-right-column">
+                <h2 id="modal-name"></h2>
+                <img id="modal-image" src="" alt="Pokémon Image">
+                <p id="modal-info"></p>
+            </div>
+        </div>
+    </div>
+    <h1>Stream Collection</h1>
+    <div id="search-bar">
+        <input type="text" id="search-input" placeholder="Search Pokémon...">
+    </div>
+    <div id="type-filters"></div>
+    <div id="species-filters"></div>
+    <div id="pokemon-container"></div>
+    <div id="page-loader">
+        <div class="spinner"></div>
+    </div>
+    <div id="footer">
+        <p>Inspired by Simeydotme's <a href="https://poke-holo.simey.me/" target="_blank">Pokemon Cards</a> and Mark Miro's <a href="https://codepen.io/markmiro/pen/wbqMPa" target="_blank">3D Card</a></p>
+        <p>Made with <a href="https://pokeapi.co/" target="_blank">PokeAPI</a></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/pokeapi-js-wrapper@1.2.4/dist/index.js"></script>
+    <script src="pokeapi-js-wrapper-sw.js"></script>
+    <script>
+        // const Pokedex = require("pokeapi-js-wrapper");
+
+        const customOptions = {
+            protocol: "https",
+            versionPath: "/api/v2/",
+            cache: true,
+            timeout: 5 * 1000, // 5s
+            cacheImages: true
+        };
+
+        const P = new Pokedex.Pokedex(customOptions);
+    </script>
+    <script src="/scripts/main.js"></script>
+</body>
+</html>
