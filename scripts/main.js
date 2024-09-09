@@ -466,7 +466,9 @@ $(document).on('click', '.pokemon', function() {
         $('#modal-image').attr('src', modalImage);
         $('#modal-info').html(modalInfo);
 
-        $('#modal').fadeIn().css("display","flex"); // Show modal
+        $('#modal-image').on('load', () => {
+            $('#modal').fadeIn().css("display","flex"); // Show modal
+        });
     })
     .catch(() => {
         console.error(`Unable to fetch data for Pokémon: ${pokemonName}`);
