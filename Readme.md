@@ -25,4 +25,9 @@ The selection of the filters is not overlapped. This means that if you select Fi
 
 ## Live version
 
-Currently, a live version is hosted on GitHub pages: https://isackender.github.io/poke-collection/
+Currently, a live version is hosted on this repository <a href="https://isackender.github.io/poke-collection/" target="_blank">GitHub pages</a>.
+Since every request is done on the client side, the work-load on the server is low.
+
+
+
+
