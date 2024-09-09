@@ -17,6 +17,10 @@ Upload a `.txt` file with the format:
 
 The expected file format consists of one line with the Pokédex number of each Pokémon and its name. If a Pokémon is shiny, append `(s)` to its name.
 
+### Exceptions
+
+Since some Pokémon have gender (like Nidoran), you can specify it with `m` or `f` after their name (for male or female respectively). Ex: `Nidoranf` or `Nidoranm(s)`
+
 ## Filters 
 
 ![Filter images](https://i.imgur.com/p72G5lI.png)
@@ -30,7 +34,3 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 ## Species
 
 **Currently Work In Progress** - There are also some filters to select the species of the whole collection (shiny, legendary, or mythical).
-
-## Exceptions
-
-Since some Pokémon have gender (like Nidoran), you can specify it with `m` or `f` after their name (for male or female respectively). Ex: `Nidoranf` or `Nidoranm(s)`
