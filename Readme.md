@@ -1,6 +1,8 @@
 # Stream collection
 
-A small tool to visualize the pokemon collection of a given file.
+A small tool to visualize the Pokémon collection of a given file.
+
+![Demo image](https://i.imgur.com/HzTNOGC.png)
 
 ## Usage
 
@@ -9,15 +11,17 @@ Upload a `.txt` file with the format:
 #bulbasaur #002 ivysaur #005 charmeleon(s) #007 squirtle
 ```
 
-Text must be lowercase and the expected file format is one line with all the pokemon you have. 
-
-If a pokemon is shiny, concatenate `(s)` its name.
+The expected file format consists of one line with lowercase text. If a Pokémon is shiny, append `(s)` to its name.
 
 ## Filters 
 
 ![Filter images](https://i.imgur.com/p72G5lI.png)
 
-The selection of the filters is not overlapped. This means that if you select Fire and Groud types, it will display all the pokemon that have Fire **OR** Ground as their types.
+You can filter Pokémon by type.
+
+The filters are non-overlapping, meaning if you select both Fire and Ground types, it will display all Pokémon that have either Fire **or** Ground as their type.
+
+The first time a filter is used, it may take a bit longer to load as it filters the entire set of Pokémon. Once filtered, the selection is cached in memory to improve performance for future requests.
 
 ## Species
 
@@ -25,9 +29,4 @@ The selection of the filters is not overlapped. This means that if you select Fi
 
 ## Live version
 
-Currently, a live version is hosted on this repository <a href="https://isackender.github.io/poke-collection/" target="_blank">GitHub pages</a>.
-Since every request is done on the client side, the work-load on the server is low.
-
-
-
-
+A live version is currently hosted on this repository's <a href="https://isackender.github.io/poke-collection/" target="_blank">GitHub pages</a>. Since all requests are handled on the client side, the server load is minimal.
