@@ -15,7 +15,7 @@ $(document).ready(async function() {
     await loadTypesData();
 
     // Hide the loader
-    $('#loader').hide();
+    $('#loader').fadeOut();
 
     $('#file-input').on('change', function(event) {
         const file = event.target.files[0];
@@ -37,6 +37,11 @@ $(document).ready(async function() {
             const reader = new FileReader();
             
             reader.onload = function(e) {
+                // Show the loader
+                $('#loader').fadeIn(function(){
+                    $('#pokemon-container').empty();
+                });
+
                 const fileContent = e.target.result;
                 // Resets initial variables
                 currentPage = 0;
@@ -49,10 +54,7 @@ $(document).ready(async function() {
                 typesDataArray = [];
                 pokemonDataArray = [];
 
-                $('#pokemon-container').empty();
                 iniPokemonCollection(fileContent);
-                // Show the loader
-                $('#loader').show();
             };
             
             reader.readAsText(file);
