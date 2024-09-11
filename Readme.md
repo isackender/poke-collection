@@ -33,4 +33,5 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 
 ## Species
 
-**Currently Work In Progress** - There are also some filters to select the species of the whole collection (shiny, legendary, or mythical).
+**Currently Work In Progress**
+There are also some filters to select the species of the whole collection (shiny, legendary, or mythical). These filters are overlaping. So you can select pokemon that match one or more of the species.
