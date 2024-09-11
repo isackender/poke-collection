@@ -2,8 +2,9 @@ let currentPage = 0;  // Keeps track of the current page
 const pageSize = 48;  // Number of Pokémon to load per batch
 let allPokemonsLoaded = false;  // Indicates if all Pokémon have been loaded
 let isLoading = false;
-let isSearching = false;
-let isFiltering = false;
+let isFilteringText = false;
+let isFilteringType = false;
+let isFilteringSpecies = false;
 
 
 let typesDataArray = [];
@@ -48,8 +49,9 @@ $(document).ready(async function() {
 
                 allPokemonsLoaded = false;
                 isLoading = false;
-                isSearching = false;
-                isFiltering = false;
+                isFilteringText = false;
+                isFilteringType = false;
+                isFilteringSpecies = false;
 
                 typesDataArray = [];
                 pokemonDataArray = [];
@@ -301,7 +303,7 @@ async function renderPokemonItems(pokemonSet) {
 }
 
 $(window).on('scroll', async function() {
-    if (isSearching || isFiltering || isLoading || allPokemonsLoaded) return;
+    if (isFilteringText || isFilteringType || isFilteringSpecies || isLoading || allPokemonsLoaded) return;
 
     if ($(window).scrollTop() + $(window).height() >= $(document).height() - 400) {
         isLoading = true;  // Prevent further scroll events while loading
@@ -319,101 +321,77 @@ let capitalizeFirstLetter = (string) => {
 }
 
 // Search functionality
-$('#search-input').on('input', async function() {
-    const query = $(this).val().toLowerCase();
+let timeout = null;
+$('#search-input').on('keyup', async function() {
+    // Debounce event 
+    clearTimeout(timeout);
 
-    if (query.length < 2 && query.length != 0) return;
-    
-    if (query.length > 0) {
-        isSearching = true;  // Disable scroll-based loading during search
-        $('#page-loader').css({'display': 'none'});
-    } else {
-        isSearching = false;  // Re-enable scroll-based loading when search is cleared
-        $('#page-loader').css({'display': 'flex'});
-    }
-
-    // Filter the complete Pokémon array
-    const filteredPokemons = pokemonDataArray.filter(pokemon => 
-        pokemon.name.toLowerCase().includes(query)
-    );
-
-    // Clear the current displayed Pokémon
-    $('#pokemon-container').empty();
-
-    
-
-    if (filteredPokemons.length == pokemonDataArray.length) {
-        allPokemonsLoaded = true;
-        $('#page-loader').css({'display': 'none'});
-    } else {
-        // Render the filtered Pokémon
-        await loadPokemonBaseData(filteredPokemons);  // Fetch base data
-        await loadPokemonData(filteredPokemons);  // Fetch aditional data
-    }
-    
-    await renderPokemonItems(filteredPokemons);
+    // Make a new timeout set to go off in 1000ms (1 second)
+    timeout = setTimeout(async function () {
+        await filterPokemons();
+    }, 800);
 });
 
 // Type filter functionality
 $(document).on('change', '.type-filter', async function() {
-    const searchTerm = $('#search-input').val().toLowerCase();
-    const selectedTypes = $('.type-filter:checked').map(function() {
-        return this.value;
-    }).get();
-
-    if ($(this).is(':checked')) {
-        $(this).next().css({'box-shadow': '0 0 10px 0 #7792bb'});
-    } else {
-        $(this).next().css({'box-shadow': 'none'});
-    }
-
-    if (selectedTypes.length > 0) {
-        isFiltering = true;  // Disable scroll-based loading during search
-        $('#pokemon-container').empty();
-        $('#page-loader').css({'display': 'flex'});
-    } else {
-        isFiltering = false;  // Re-enable scroll-based loading when search is cleared
-        $('#page-loader').css({'display': 'flex'});
-        $('#pokemon-container').empty();
-        renderPokemonItems(pokemonDataArray);
-        $('#page-loader').css({'display': 'none'});
-        return;
-    }
-
-    if (!allPokemonsLoaded) {
-        allPokemonsLoaded = true;
-        await loadPokemonBaseData(pokemonDataArray);  // Fetch base data
-        await loadPokemonData(pokemonDataArray);  // Fetch aditional data
-    }
-
-    // Filter the complete Pokémon array
-    const filteredPokemons = pokemonDataArray.filter(pokemon => 
-        pokemon.name.toLowerCase().includes(searchTerm) && selectedTypes.some(type => pokemon.types.includes(type))
-    );
-
-    await renderPokemonItems(filteredPokemons);
-    $('#page-loader').css({'display': 'none'});
+    await filterPokemons();
 });
 
 // Species filter functionality
 $(document).on('change', '.species-filter', async function() {
-    const searchTerm = $('#search-input').val().toLowerCase();
+    await filterPokemons();
+});
+
+async function filterPokemons() {
+    /* Text filtering */
+
+    const query = $('#search-input').val().toLowerCase();
+
+    if (query.length > 0) {
+        isFilteringText = true;  // Disable scroll-based loading during search
+        $('#pokemon-container').empty();
+        $('#page-loader').css({'display': 'flex'});
+    } else {
+        isFilteringText = false;  // Re-enable scroll-based loading when search is cleared
+    }
+
+    /* Type filtering */
+
+    const selectedTypes = $('.type-filter:checked').map(function() {
+        return this.value;
+    }).get();
+
+    $('.type-filter').each(function() {
+        if ($(this).is(':checked')) {
+            $(this).next().css({'box-shadow': '0 0 10px 0 #7792bb'});
+        } else {
+            $(this).next().css({'box-shadow': 'none'});
+        }
+    });
+
+    if (selectedTypes.length > 0) {
+        isFilteringType = true;  // Disable scroll-based loading during search
+        $('#pokemon-container').empty();
+        $('#page-loader').css({'display': 'flex'});
+    } else {
+        isFilteringType = false;  // Re-enable scroll-based loading when search is cleared
+    }
+
+    /* Species selector filtering */
+
     const selectedSpecies = $('.species-filter:checked').map(function() {
         return this.value;
     }).get();
 
     if (selectedSpecies.length > 0) {
-        isFiltering = true;  // Disable scroll-based loading during search
+        isFilteringSpecies = true;  // Disable scroll-based loading during search
         $('#pokemon-container').empty();
         $('#page-loader').css({'display': 'flex'});
     } else {
-        isFiltering = false;  // Re-enable scroll-based loading when search is cleared
-        $('#page-loader').css({'display': 'flex'});
-        $('#pokemon-container').empty();
-        renderPokemonItems(pokemonDataArray);
-        $('#page-loader').css({'display': 'none'});
-        return;
+        isFilteringSpecies = false;  // Re-enable scroll-based loading when search is cleared
     }
+
+    /* Apply filters */
 
     if (!allPokemonsLoaded) {
         allPokemonsLoaded = true;
@@ -421,27 +399,78 @@ $(document).on('change', '.species-filter', async function() {
         await loadPokemonData(pokemonDataArray);  // Fetch aditional data
     }
 
-    // Filter the complete Pokémon array
-    const filteredPokemons = pokemonDataArray.filter((pokemon) => {
-        let selected = false;
-        selectedSpecies.forEach((species) => {
-            if (species == 'shiny' && pokemon.isShiny) {
-                selected = true;
+    let filteredPokemons = pokemonDataArray;
+
+    if (isFilteringText) {
+        // Filter the complete Pokémon array
+
+        filteredPokemons = filteredPokemons.filter(pokemon => 
+            pokemon.name.toLowerCase().includes(query)
+        );
+    }
+
+    if (isFilteringType) {
+        filteredPokemons = filteredPokemons.filter(pokemon => 
+            selectedTypes.some(type => pokemon.types.includes(type))
+        );
+    }
+
+    if (isFilteringSpecies) {
+        filteredPokemons = filteredPokemons.filter((pokemon) => {
+            let selected = false;
+            if (selectedSpecies.length > 1) { // Overlap
+                let pokemonSpecies = [];
+                if (pokemon.isShiny) pokemonSpecies.push('shiny');
+                if (pokemon.isLegendary) pokemonSpecies.push('legendary');
+                if (pokemon.isMythical) pokemonSpecies.push('mythical');
+
+                let sortedOriginalSpecies = pokemonSpecies.sort(function(a, b){
+                    if(a < b) { return -1; }
+                    if(a > b) { return 1; }
+                    return 0;
+                });
+
+                let sortedFilteredSpecies = selectedSpecies.sort(function(a, b){
+                    if(a < b) { return -1; }
+                    if(a > b) { return 1; }
+                    return 0;
+                });
+
+                if (sortedOriginalSpecies.toString() === sortedFilteredSpecies.toString()) selected = true;
+            } else {
+                selectedSpecies.forEach((species) => {
+                    if (species == 'shiny' && pokemon.isShiny) {
+                        selected = true;
+                    }
+                    if (species == 'legendary' && pokemon.isLegendary) {
+                        selected = true;
+                    }
+                    if (species == 'mythical' && pokemon.isMythical) {
+                        selected = true;
+                    }
+                });
             }
-            if (species == 'legendary' && pokemon.isLegendary) {
-                selected = true;
-            }
-            if (species == 'mythical' && pokemon.isMythical) {
-                selected = true;
-            }
+            return selected;
         });
+    }
 
-        return pokemon.name.toLowerCase().includes(searchTerm) && selected;
-    });
+    if (!isFilteringText && !isFilteringType && !isFilteringSpecies) {
+        // Clear the current displayed Pokémon
+        $('#pokemon-container').empty();
+        // Load all the pokemon data
+        await renderPokemonItems(pokemonDataArray);
+        $('#page-loader').css({'display': 'none'});
+    }
+    
+    if (isFilteringText || isFilteringType || isFilteringSpecies) {
+        // Clear the current displayed Pokémon
+        $('#pokemon-container').empty();
+        await renderPokemonItems(filteredPokemons);
+        $('#page-loader').css({'display': 'none'});
+    }
+}
 
-    await renderPokemonItems(filteredPokemons);
-    $('#page-loader').css({'display': 'none'});
-});
+
 
 // Click event for Pokémon containers
 $(document).on('click', '.pokemon', function() {
