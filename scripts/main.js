@@ -1,5 +1,5 @@
 let currentPage = 0;  // Keeps track of the current page
-const pageSize = 48;  // Number of Pokémon to load per batch
+const pageSize = 100;  // Number of Pokémon to load per batch
 let allPokemonsLoaded = false;  // Indicates if all Pokémon have been loaded
 let isLoading = false;
 let isFilteringText = false;
@@ -305,7 +305,7 @@ async function renderPokemonItems(pokemonSet) {
 $(window).on('scroll', async function() {
     if (isFilteringText || isFilteringType || isFilteringSpecies || isLoading || allPokemonsLoaded) return;
 
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 400) {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 1200) {
         isLoading = true;  // Prevent further scroll events while loading
         $('#page-loader').css({'display': 'flex'});  // Show the loader while loading more Pokémon
         await loadNextSetOfPokemon();  // Load the next set of Pokémon
