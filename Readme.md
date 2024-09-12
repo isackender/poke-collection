@@ -2,7 +2,7 @@
 
 A small tool to visualize the Pokémon collection of a given file.
 
-![Demo image](https://i.imgur.com/wrPAeYr.png)
+![Demo image](https://i.imgur.com/YaIwXJM.png)
 
 ## Live version
 
@@ -23,7 +23,7 @@ Since some Pokémon have gender (like Nidoran), you can specify it with `m` or `
 
 ## Filters 
 
-![Filter images](https://i.imgur.com/p72G5lI.png)
+![Filter images](https://i.imgur.com/1RGym3n.png)
 
 You can filter Pokémon by type.
 
