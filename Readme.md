@@ -2,7 +2,7 @@
 
 A small tool to visualize the Pokémon collection of a given file.
 
-![Demo image](https://i.imgur.com/HzTNOGC.png)
+![Demo image](https://i.imgur.com/wrPAeYr.png)
 
 ## Live version
 
