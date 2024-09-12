@@ -305,7 +305,7 @@ async function renderPokemonItems(pokemonSet) {
 $(window).on('scroll', async function() {
     if (isFilteringText || isFilteringType || isFilteringSpecies || isLoading || allPokemonsLoaded) return;
 
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 1200) {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 2*($(window).height())) {
         isLoading = true;  // Prevent further scroll events while loading
         $('#page-loader').css({'display': 'flex'});  // Show the loader while loading more Pokémon
         await loadNextSetOfPokemon();  // Load the next set of Pokémon
