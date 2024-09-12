@@ -35,3 +35,10 @@ The first time a filter is used, it may take a bit longer to load as it filters 
 
 **Currently Work In Progress**
 There are also some filters to select the species of the whole collection (shiny, legendary, or mythical). These filters are overlaping. So you can select pokemon that match one or more of the species.
+
+## Thanks to
+
+- [PokéAPI](https://pokeapi.co/)
+- [pokeapi-js-wrapper](https://github.com/PokeAPI/pokeapi-js-wrapper)
+- Mark Miro's [3D Card](https://codepen.io/markmiro/pen/wbqMPa)
+- Simeydotme's [Pokémon cards](https://poke-holo.simey.me/)
