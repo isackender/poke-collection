@@ -102,6 +102,7 @@ async function loadTypeFilters() {
 async function loadTypesData() {
     let promises = typesDataArray.map(type => {
         return new Promise((resolve) => {
+            // P.resource(["/api/v2/type/"+type.name]).then((typeData) => {
             P.getTypeByName(type.name).then((typeData) => {
                 type.spriteUrl = typeData["sprites"]["generation-viii"]["legends-arceus"]["name_icon"];
                 const checkbox = document.querySelectorAll(`input[type='checkbox'][value='${type.name}']`);
@@ -110,8 +111,9 @@ async function loadTypesData() {
 
                 resolve();
             })
-            .catch (() => {
+            .catch ((error) => {
                 console.error(`Unable to load type data for: ${type.name}`);
+                console.error(error);
                 resolve(); // To avoid blocking next requests
             });
         });
