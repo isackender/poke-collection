@@ -10,7 +10,7 @@ let isFilteringSpecies = false;
 let typesDataArray = [];
 let pokemonDataArray = [];
 
-$(document).ready(async function() {
+$(document).ready(async function () {
     loadSpeciesFilters();
     await loadTypeFilters();
     await loadTypesData();
@@ -18,13 +18,43 @@ $(document).ready(async function() {
     // Hide the loader
     $('#loader').fadeOut();
 
-    $('#file-input').on('change', function(event) {
+    $('#paste-button').on('click', async function () {
+        try {
+            const text = await navigator.clipboard.readText();
+
+            if (text) {
+                $('#loader').fadeIn(function () {
+                    $('#pokemon-container').empty();
+                });
+
+                // Resets initial variables
+                currentPage = 0;
+                allPokemonsLoaded = false;
+                isLoading = false;
+                isFilteringText = false;
+                isFilteringType = false;
+                isFilteringSpecies = false;
+
+                typesDataArray = [];
+                pokemonDataArray = [];
+
+                iniPokemonCollection(text);
+            } else {
+                alert('No text available in the clipboard.');
+            }
+        } catch (err) {
+            alert('Error reading text from clipboard.');
+            console.error('Error:', err);
+        }
+    });
+
+    $('#file-input').on('change', function (event) {
         const file = event.target.files[0];
-        
+
         if (file) {
             const fileExtension = file.name.split('.').pop().toLowerCase();
             const validExtensions = ['txt']; // List of allowed file extensions
-            
+
             if (!validExtensions.includes(fileExtension)) {
                 alert('Invalid file format. Please upload a .txt file.');
                 return;
@@ -36,10 +66,10 @@ $(document).ready(async function() {
             }
 
             const reader = new FileReader();
-            
-            reader.onload = function(e) {
+
+            reader.onload = function (e) {
                 // Show the loader
-                $('#loader').fadeIn(function(){
+                $('#loader').fadeIn(function () {
                     $('#pokemon-container').empty();
                 });
 
@@ -58,7 +88,7 @@ $(document).ready(async function() {
 
                 iniPokemonCollection(fileContent);
             };
-            
+
             reader.readAsText(file);
         }
     });
@@ -91,10 +121,10 @@ async function loadTypeFilters() {
             });
             resolve();
         })
-        .catch (() => {
-            console.log(`Types request failed`);
-            resolve(); // To avoid blocking next requests
-        });
+            .catch(() => {
+                console.log(`Types request failed`);
+                resolve(); // To avoid blocking next requests
+            });
     });
 }
 
@@ -111,11 +141,11 @@ async function loadTypesData() {
 
                 resolve();
             })
-            .catch ((error) => {
-                console.error(`Unable to load type data for: ${type.name}`);
-                console.error(error);
-                resolve(); // To avoid blocking next requests
-            });
+                .catch((error) => {
+                    console.error(`Unable to load type data for: ${type.name}`);
+                    console.error(error);
+                    resolve(); // To avoid blocking next requests
+                });
         });
     });
 
@@ -126,7 +156,7 @@ async function loadTypesData() {
 
 function loadSpeciesFilters() {
     let speciesArray = ['shiny', 'legendary', 'mythical']
-    
+
     speciesArray.forEach(species => {
         const typeCheckbox = $(`
             <label>
@@ -148,7 +178,7 @@ async function loadFile(fileContent) {
             const parts = pokemon.trim().split(' ');
             let number = parts[0];
             let name = capitalizeFirstLetter(parts.slice(1).join(' ').toLowerCase());
-            let apiName = parts.slice(1).join('-').replace("'","").replace(".","").toLowerCase();
+            let apiName = parts.slice(1).join('-').replace("'", "").replace(".", "").toLowerCase();
             let imgSrc = "#";
             let artworkSrc = "#";
             let isShiny = false;
@@ -190,7 +220,7 @@ async function loadFile(fileContent) {
 
 // Sort the pokemon array
 async function sortPokemonArray() {
-    pokemonDataArray.sort(function(a, b) {
+    pokemonDataArray.sort(function (a, b) {
         return a.number - b.number;
     });
 }
@@ -201,12 +231,12 @@ async function loadNextSetOfPokemon() {
     // Determine the Pokémon subset to load based on the current page
     const pokemonSubset = pokemonDataArray.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
     currentPage++;  // Move to the next page. Increment early to prevent multiple loading
-    
+
     // If fewer Pokémon are loaded than the pageSize, mark as all loaded
     if (pokemonSubset.length < pageSize) {
         allPokemonsLoaded = true;
-    }    
-    
+    }
+
     // console.log(pokemonSubset);
 
     await loadPokemonBaseData(pokemonSubset);  // Fetch base data
@@ -226,10 +256,10 @@ async function loadPokemonBaseData(pokemonSet) {
                 pokemon.number = pokemonData.id;
                 resolve();
             })
-            .catch (() => {
-                console.error(`Unable to load species data for Pokémon: ${preApiName}`);
-                resolve(); // To avoid blocking next requests
-            });
+                .catch(() => {
+                    console.error(`Unable to load species data for Pokémon: ${preApiName}`);
+                    resolve(); // To avoid blocking next requests
+                });
         });
     });
 
@@ -247,11 +277,11 @@ async function loadPokemonData(pokemonSet) {
                 pokemon.types = pokemonData.types.map(type => type.type.name);
                 resolve();
             })
-            .catch(() => {
-                console.error(`Unable to load data for Pokémon: ${pokemon.apiName}`);
-                pokemon.isError = true;
-                resolve(); // To avoid blocking next requests
-            });
+                .catch(() => {
+                    console.error(`Unable to load data for Pokémon: ${pokemon.apiName}`);
+                    pokemon.isError = true;
+                    resolve(); // To avoid blocking next requests
+                });
         });
     });
 
@@ -276,12 +306,12 @@ async function renderPokemonItems(pokemonSet) {
                 </div>
                 </div>
             `);
-    
+
             // Append to the container
             $('#pokemon-container').append(pokemonDiv);
-            
+
             itemcount++;
-    
+
             // Add a delay before applying the animation
             setTimeout(() => {
                 $(pokemonDiv).css({
@@ -297,21 +327,21 @@ async function renderPokemonItems(pokemonSet) {
     cardifyItems();
 
     // Hide the loader and show the content
-    $('#loader').fadeOut(300, function() {
+    $('#loader').fadeOut(300, function () {
         $('#pokemon-container').css('opacity', 1); // Show content
     });
 
     return Promise.all(promises);
 }
 
-$(window).on('scroll', async function() {
+$(window).on('scroll', async function () {
     if (isFilteringText || isFilteringType || isFilteringSpecies || isLoading || allPokemonsLoaded) return;
 
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 2*($(window).height())) {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 2 * ($(window).height())) {
         isLoading = true;  // Prevent further scroll events while loading
-        $('#page-loader').css({'display': 'flex'});  // Show the loader while loading more Pokémon
+        $('#page-loader').css({ 'display': 'flex' });  // Show the loader while loading more Pokémon
         await loadNextSetOfPokemon();  // Load the next set of Pokémon
-        $('#page-loader').css({'display': 'none'});  // Hide the loader after loading
+        $('#page-loader').css({ 'display': 'none' });  // Hide the loader after loading
         isLoading = false;  // Allow further scroll events
     }
 });
@@ -324,7 +354,7 @@ let capitalizeFirstLetter = (string) => {
 
 // Search functionality
 let timeout = null;
-$('#search-input').on('keyup', async function() {
+$('#search-input').on('keyup', async function () {
     // Debounce event 
     clearTimeout(timeout);
 
@@ -335,12 +365,12 @@ $('#search-input').on('keyup', async function() {
 });
 
 // Type filter functionality
-$(document).on('change', '.type-filter', async function() {
+$(document).on('change', '.type-filter', async function () {
     await filterPokemons();
 });
 
 // Species filter functionality
-$(document).on('change', '.species-filter', async function() {
+$(document).on('change', '.species-filter', async function () {
     await filterPokemons();
 });
 
@@ -352,43 +382,43 @@ async function filterPokemons() {
     if (query.length > 0) {
         isFilteringText = true;  // Disable scroll-based loading during search
         $('#pokemon-container').empty();
-        $('#page-loader').css({'display': 'flex'});
+        $('#page-loader').css({ 'display': 'flex' });
     } else {
         isFilteringText = false;  // Re-enable scroll-based loading when search is cleared
     }
 
     /* Type filtering */
 
-    const selectedTypes = $('.type-filter:checked').map(function() {
+    const selectedTypes = $('.type-filter:checked').map(function () {
         return this.value;
     }).get();
 
-    $('.type-filter').each(function() {
+    $('.type-filter').each(function () {
         if ($(this).is(':checked')) {
-            $(this).next().css({'box-shadow': '0 0 10px 0 #7792bb'});
+            $(this).next().css({ 'box-shadow': '0 0 10px 0 #7792bb' });
         } else {
-            $(this).next().css({'box-shadow': 'none'});
+            $(this).next().css({ 'box-shadow': 'none' });
         }
     });
 
     if (selectedTypes.length > 0) {
         isFilteringType = true;  // Disable scroll-based loading during search
         $('#pokemon-container').empty();
-        $('#page-loader').css({'display': 'flex'});
+        $('#page-loader').css({ 'display': 'flex' });
     } else {
         isFilteringType = false;  // Re-enable scroll-based loading when search is cleared
     }
 
     /* Species selector filtering */
 
-    const selectedSpecies = $('.species-filter:checked').map(function() {
+    const selectedSpecies = $('.species-filter:checked').map(function () {
         return this.value;
     }).get();
 
     if (selectedSpecies.length > 0) {
         isFilteringSpecies = true;  // Disable scroll-based loading during search
         $('#pokemon-container').empty();
-        $('#page-loader').css({'display': 'flex'});
+        $('#page-loader').css({ 'display': 'flex' });
     } else {
         isFilteringSpecies = false;  // Re-enable scroll-based loading when search is cleared
     }
@@ -406,13 +436,13 @@ async function filterPokemons() {
     if (isFilteringText) {
         // Filter the complete Pokémon array
 
-        filteredPokemons = filteredPokemons.filter(pokemon => 
+        filteredPokemons = filteredPokemons.filter(pokemon =>
             pokemon.name.toLowerCase().includes(query)
         );
     }
 
     if (isFilteringType) {
-        filteredPokemons = filteredPokemons.filter(pokemon => 
+        filteredPokemons = filteredPokemons.filter(pokemon =>
             selectedTypes.some(type => pokemon.types.includes(type))
         );
     }
@@ -426,15 +456,15 @@ async function filterPokemons() {
                 if (pokemon.isLegendary) pokemonSpecies.push('legendary');
                 if (pokemon.isMythical) pokemonSpecies.push('mythical');
 
-                let sortedOriginalSpecies = pokemonSpecies.sort(function(a, b){
-                    if(a < b) { return -1; }
-                    if(a > b) { return 1; }
+                let sortedOriginalSpecies = pokemonSpecies.sort(function (a, b) {
+                    if (a < b) { return -1; }
+                    if (a > b) { return 1; }
                     return 0;
                 });
 
-                let sortedFilteredSpecies = selectedSpecies.sort(function(a, b){
-                    if(a < b) { return -1; }
-                    if(a > b) { return 1; }
+                let sortedFilteredSpecies = selectedSpecies.sort(function (a, b) {
+                    if (a < b) { return -1; }
+                    if (a > b) { return 1; }
                     return 0;
                 });
 
@@ -461,21 +491,21 @@ async function filterPokemons() {
         $('#pokemon-container').empty();
         // Load all the pokemon data
         await renderPokemonItems(pokemonDataArray);
-        $('#page-loader').css({'display': 'none'});
+        $('#page-loader').css({ 'display': 'none' });
     }
-    
+
     if (isFilteringText || isFilteringType || isFilteringSpecies) {
         // Clear the current displayed Pokémon
         $('#pokemon-container').empty();
         await renderPokemonItems(filteredPokemons);
-        $('#page-loader').css({'display': 'none'});
+        $('#page-loader').css({ 'display': 'none' });
     }
 }
 
 
 
 // Click event for Pokémon containers
-$(document).on('click', '.pokemon', function() {
+$(document).on('click', '.pokemon', function () {
     const pokemonName = $(this).data('name').toLowerCase();
 
     // Fetch detailed data for the clicked Pokémon
@@ -502,21 +532,21 @@ $(document).on('click', '.pokemon', function() {
         $('#modal-bg').off('load');
 
         $('#modal-bg').on('load', () => {
-            $('#modal').fadeIn().css("display","flex"); // Show modal
+            $('#modal').fadeIn().css("display", "flex"); // Show modal
         });
     })
-    .catch(() => {
-        console.error(`Unable to fetch data for Pokémon: ${pokemonName}`);
-    });
+        .catch(() => {
+            console.error(`Unable to fetch data for Pokémon: ${pokemonName}`);
+        });
 });
 
 // Click event to close the modal
-$('#modal-close').on('click', function() {
+$('#modal-close').on('click', function () {
     $('#modal').fadeOut(); // Hide modal
 });
 
 // Hide the modal if clicked outside of the content
-$('#modal').on('click', function(e) {
+$('#modal').on('click', function (e) {
     if ($(e.target).is('#modal')) {
         $('#modal').fadeOut(); // Hide modal
     }
@@ -535,7 +565,7 @@ function cardifyItems() {
             x: leftX - bounds.width / 2,
             y: topY - bounds.height / 2
         };
-        const distance = Math.sqrt(center.x**2 + center.y**2);
+        const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
 
         card.css('transform', `
             scale3d(1.2, 1.2, 1.2)
@@ -543,7 +573,7 @@ function cardifyItems() {
             ${center.y / 20},
             ${-center.x / 20},
             0,
-            ${Math.log(distance) *4}deg
+            ${Math.log(distance) * 4}deg
             )
         `);
 
@@ -566,11 +596,11 @@ function cardifyItems() {
 
         card.find('.glow-border').css('background-image', `
             linear-gradient(135deg,
-                rgba(0,0,0,0) ${getYPercentage(topY)-15}%,
-                rgba(255,222,222,0.45) ${getYPercentage(topY)-1}%,
+                rgba(0,0,0,0) ${getYPercentage(topY) - 15}%,
+                rgba(255,222,222,0.45) ${getYPercentage(topY) - 1}%,
                 rgba(255,222,255,0.8) ${getYPercentage(topY)}%,
-                rgba(255,255,255,0.45) ${getYPercentage(topY)+1}%,
-                rgba(0,0,0,0) ${getYPercentage(topY)+15}%
+                rgba(255,255,255,0.45) ${getYPercentage(topY) + 1}%,
+                rgba(0,0,0,0) ${getYPercentage(topY) + 15}%
             )
         `);
 
@@ -583,34 +613,34 @@ function cardifyItems() {
 
         card.find('.shadow').css('background-image', `
             linear-gradient(0deg,
-                rgba(0,0,0,${-(getYTopShadowOpacity(topY)/100)+0.4}) 0%,
+                rgba(0,0,0,${-(getYTopShadowOpacity(topY) / 100) + 0.4}) 0%,
                 rgba(0,0,0,0) 50%,
                 rgba(0,0,0,0) 100%
             )
         `);
     }
 
-    function getYPercentage(value, inverted = false){
+    function getYPercentage(value, inverted = false) {
         if (inverted) {
-            return Math.sqrt((Math.ceil((100*value)/240) - 100)**2);
+            return Math.sqrt((Math.ceil((100 * value) / 240) - 100) ** 2);
         }
-    
-        return Math.ceil((100*value)/240);
+
+        return Math.ceil((100 * value) / 240);
     }
 
-    function getYTopShadowOpacity(value){
+    function getYTopShadowOpacity(value) {
         if (value <= 120) {
-            return Math.ceil((100*value)/120);
+            return Math.ceil((100 * value) / 120);
         }
     }
 
-    cards.each(function() {
+    cards.each(function () {
         const card = $(this);
 
         card.addClass('cardified');
 
-        card.on('mouseenter', function() {
-            $(document).on('mousemove.rotate', function(e) {
+        card.on('mouseenter', function () {
+            $(document).on('mousemove.rotate', function (e) {
                 card.find('.glow').fadeIn(150);
                 card.find('.glow-border').fadeIn(150);
                 card.find('.shadow').fadeIn(150);
@@ -618,7 +648,7 @@ function cardifyItems() {
             });
         });
 
-        card.on('mouseleave', function() {
+        card.on('mouseleave', function () {
             $(document).off('mousemove.rotate');
 
             card.css('transform', '');
@@ -626,13 +656,13 @@ function cardifyItems() {
             card.css('background-image', "url('./images/card-bg.png')");
             card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a)");
             card.css('background-size', 'cover');
-            
+
             if ($(card).hasClass("shiny")) {
                 card.css('background', 'linear-gradient(135deg, #3669b6, #21165a)');
                 card.css('background-image', "url('./images/card-bg.png')");
                 card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a)");
             }
-            
+
             if ($(card).hasClass("legendary")) {
                 card.css('background', 'linear-gradient(135deg, #d0b854, #e85d00)');
                 card.css('background-image', "url('./images/card-bg.png')");
@@ -644,7 +674,7 @@ function cardifyItems() {
                 card.css('background-image', "url('./images/card-bg.png')");
                 card.css('background-image', "url('./images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%)");
             }
-            
+
             card.find('.glow').fadeOut(150);
             card.find('.glow-border').fadeOut(150);
             card.find('.shadow').fadeOut(150);

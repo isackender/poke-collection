@@ -1,6 +1,7 @@
-:root::-webkit-scrollbar{
+:root::-webkit-scrollbar {
     display: none;
 }
+
 :root {
     scrollbar-width: thin;
     -ms-overflow-style: none;
@@ -13,21 +14,27 @@
         grid-template-columns: repeat(1, 1fr);
         gap: 10px;
     }
-    #file-input, #search-input {
+
+    #file-input,
+    #search-input {
         width: auto;
         margin-right: 0;
     }
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         gap: 10px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
+
     #footer p {
         display: auto;
         text-align: center;
     }
 }
+
 /* Extra small devices (landscape phones, 280px and up) */
 @media (min-width: 280px) {
     #search-bar {
@@ -35,62 +42,83 @@
         grid-template-columns: repeat(1, 1fr);
         gap: 10px;
     }
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         width: 90%;
         margin-left: 5%;
         grid-template-columns: repeat(2, 1fr);
     }
+
     #pokemon-container {
         width: 90%;
         margin-left: 5%;
     }
 }
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
     #search-bar {
         display: flex;
         gap: 0px;
     }
-    #file-input {
-        width: 20%;
+
+    #file-input,
+    #paste-button {
+        width: 15%;
         margin-right: 20px;
     }
+
     #search-input {
-        width: 60%;
+        width: 40%;
     }
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         grid-template-columns: repeat(3, 1fr);
     }
+
     #footer p {
         display: flex;
         text-align: justify;
         justify-content: center;
     }
 }
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         width: 80%;
         margin-left: 10%;
         grid-template-columns: repeat(4, 1fr);
     }
+
     #pokemon-container {
         width: 80%;
         margin-left: 10%;
     }
 }
+
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         grid-template-columns: repeat(5, 1fr);
     }
 }
+
 /* X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-    #type-filters, #species-filters {
+
+    #type-filters,
+    #species-filters {
         grid-template-columns: repeat(6, 1fr);
     }
 }
+
 /* XX-Large devices (large desktops, 1400px and up) */
 @media (min-width: 1400px) {
     #type-filters {
@@ -107,6 +135,7 @@ body {
 
     background-color: #452a57;
 }
+
 h1 {
     text-align: center;
     color: #f5f5f5;
@@ -123,7 +152,10 @@ h1 img {
     justify-content: center;
     margin-bottom: 20px;
 }
-#search-input, #file-input {
+
+#search-input,
+#file-input,
+#paste-button {
     padding: 12px 16px;
     font-size: 16px;
     font-family: 'Raleway', sans-serif;
@@ -131,13 +163,15 @@ h1 img {
     border: 0px;
     border-radius: 4px;
     background: linear-gradient(135deg, #7792bb, #362f5a);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
     outline: none;
 }
+
 #file-input {
     cursor: pointer;
 }
+
 input::file-selector-button {
     color: #f5f5f5;
     background: rgba(0, 0, 0, 0);
@@ -147,14 +181,17 @@ input::file-selector-button {
     margin-right: 0.5em;
     cursor: pointer;
 }
+
 #search-input:focus {
     border-color: #6200ea;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 #search-input::placeholder {
     color: #f5f5f5;
     opacity: 1;
 }
+
 #search-bar label {
     position: absolute;
     top: 0;
@@ -163,8 +200,9 @@ input::file-selector-button {
     color: #888;
     transition: all 0.3s ease;
 }
-#search-input:not(:placeholder-shown) + label,
-#search-input:focus + label {
+
+#search-input:not(:placeholder-shown)+label,
+#search-input:focus+label {
     top: -20px;
     left: 8px;
     font-size: 12px;
@@ -174,21 +212,28 @@ input::file-selector-button {
 }
 
 /* Type filters styles */
-#type-filters, #species-filters {
+#type-filters,
+#species-filters {
     margin-bottom: 20px;
     vertical-align: middle;
 }
-#type-filters label, #species-filters label {
+
+#type-filters label,
+#species-filters label {
     color: #f5f5f5;
     font-family: 'Raleway', sans-serif;
-	text-align: center;
+    text-align: center;
 }
+
 .type-sprite {
     max-height: 2em;
     vertical-align: middle;
     border-radius: 8px;
 }
-input.type-filter, .species-filter, .type-sprite {
+
+input.type-filter,
+.species-filter,
+.type-sprite {
     cursor: pointer;
 }
 
@@ -210,12 +255,14 @@ input.type-filter, .species-filter, .type-sprite {
     justify-content: center;
     z-index: 1000;
 }
+
 #page-loader {
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
+
 .spinner {
     border: 5px solid #7792bb;
     border-top: 5px solid #362f5a;
@@ -224,27 +271,38 @@ input.type-filter, .species-filter, .type-sprite {
     height: 50px;
     animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Modal styles */
 h2#modal-name {
     font-family: 'Bitter', serif;
 }
+
 #modal {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
     z-index: 1000;
 }
+
 #modal-content {
     /*background: linear-gradient(135deg, #7792bb, #362244);*/
     background: linear-gradient(135deg, #362244 40%, #3f306a);
@@ -252,10 +310,12 @@ h2#modal-name {
     padding: 20px;
     width: 80%;
     max-width: 600px;
-    position: relative; /* To position close button absolutely */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+    /* To position close button absolutely */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #f5f5f5;
 }
+
 #modal-close {
     position: absolute;
     top: 10px;
@@ -264,14 +324,16 @@ h2#modal-name {
     color: #ddd;
     cursor: pointer;
 }
+
 #modal-bg {
     pointer-events: none;
     position: absolute;
     height: 100%;
     z-index: 0;
     margin: -20px;
-    mask-image: linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0));
+    mask-image: linear-gradient(135deg, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0));
 }
+
 #modal-right-column {
     margin-left: 350px;
 }
@@ -283,10 +345,13 @@ h2#modal-name {
     justify-content: center;
     align-items: center;
 }
+
 .perspective-container {
     perspective: 800px;
-    animation-fill-mode: forwards;  /* Ensures the final state is retained */
+    animation-fill-mode: forwards;
+    /* Ensures the final state is retained */
 }
+
 .perspective-container:hover {
     z-index: 990;
 }
@@ -296,6 +361,7 @@ h2#modal-name {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -308,7 +374,7 @@ h2#modal-name {
     padding: 20px;
     height: 200px;
     width: 120px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: linear-gradient(135deg, #7792bb, #362f5a);
     background-image: url('../images/card-bg.png');
     background-image: url('../images/card-bg.png'), linear-gradient(135deg, #7792bb, #362f5a);
@@ -322,11 +388,13 @@ h2#modal-name {
     color: #f5f5f5;
     cursor: pointer;
 }
+
 .pokemon img {
     width: 100px;
     height: 100px;
     object-fit: contain;
 }
+
 /*
 .pokemon:hover {
     transform: scale(1.1);
@@ -335,29 +403,36 @@ h2#modal-name {
 .pokemon h2 {
     margin: 0;
 }
-.pokemon h2 span{
+
+.pokemon h2 span {
     font-size: 16px;
     vertical-align: middle;
 }
+
 .pokemon.shiny {
     background: linear-gradient(135deg, #3669b6, #21165a);
     background-image: url('../images/card-bg.png');
     background-image: url('../images/card-bg.png'), linear-gradient(135deg, #3669b6, #21165a);
 }
+
 .pokemon.legendary {
     background: linear-gradient(135deg, #d0b854, #e85d00);
     background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00);;
+    background-image: url('../images/card-bg.png'), linear-gradient(135deg, #d0b854, #e85d00);
+    ;
 }
+
 .pokemon.mythical {
-    background: linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%);
+    background: linear-gradient(135deg, rgba(119, 146, 187, 1) 0%, rgb(62, 168, 136) 50%, rgba(54, 47, 90, 1) 100%);
     background-image: url('../images/card-bg.png');
-    background-image: url('../images/card-bg.png'), linear-gradient(135deg, rgba(119,146,187,1) 0%, rgb(62, 168, 136) 50%, rgba(54,47,90,1) 100%);
+    background-image: url('../images/card-bg.png'), linear-gradient(135deg, rgba(119, 146, 187, 1) 0%, rgb(62, 168, 136) 50%, rgba(54, 47, 90, 1) 100%);
 }
+
 .pokemon.error {
     opacity: 0.3;
     cursor: default;
 }
+
 .pokemon p {
     margin: 10px 0 0;
 }
@@ -381,6 +456,7 @@ h2#modal-name {
         box-shadow: 0px 8px 20px 5px #00000099;
     }
 }
+
 .card .glow {
     border-radius: 10px;
     position: absolute;
@@ -391,6 +467,7 @@ h2#modal-name {
 
     background-image: radial-gradient(circle at 50% -20%, #ffffff22, #0000000f);
 }
+
 .card .glow-border {
     border-radius: 10px;
     position: absolute;
@@ -403,6 +480,7 @@ h2#modal-name {
     mask-mode: luminance;
     mask-composite: add;
 }
+
 .card .shadow {
     border-radius: 10px;
     position: absolute;
@@ -411,7 +489,7 @@ h2#modal-name {
     left: 0;
     top: 0;
 
-    background:rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
 }
 
 /* Footer */
@@ -423,11 +501,13 @@ h2#modal-name {
     color: #f5f5f5;
     margin: 20px 0 0;
 }
+
 #footer p {
     width: 100%;
     margin: 5px 0 0;
 }
-#footer p a {
+
+#footer a {
     margin-left: 0.3em;
     margin-right: 0.3em;
     color: #d0b854;
