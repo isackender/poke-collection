@@ -18,7 +18,7 @@ $(document).ready(async function () {
     // Hide the loader
     $('#loader').fadeOut();
 
-    $('#paste-button').on('click', async function () {
+    $('#paste-input').on('click', async function () {
         try {
             const text = await navigator.clipboard.readText();
 
