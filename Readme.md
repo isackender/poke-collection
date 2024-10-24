@@ -17,6 +17,8 @@ Upload a `.txt` file with the format:
 
 The expected file format consists of one line with the Pokédex number of each Pokémon and its name. If a Pokémon is shiny, append `(s)` to its name.
 
+Alternatively, you can copy the contents of the file and paste them with the "Paste from clipboard" button.
+
 ### Exceptions
 
 Since some Pokémon have gender (like Nidoran), you can specify it with `m` or `f` after their name (for male or female respectively). Ex: `Nidoranf` or `Nidoranm(s)`
